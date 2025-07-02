@@ -1,6 +1,7 @@
 import pygame
 import sys
 from menu import Menu
+from level1 import run_level1
 
 # Initialize Pygame
 pygame.init()
@@ -38,7 +39,8 @@ def main():
             menu.draw()
 
         elif current_state == "game":
-            screen.fill((0, 0, 0))  
+            run_level1()  # Start phase 1
+            current_state = "menu"  # Return to menu after phase ends
 
         pygame.display.flip()
 
