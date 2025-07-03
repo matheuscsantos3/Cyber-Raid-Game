@@ -32,15 +32,30 @@ class Player:
         screen.blit(self.image, self.rect)
 
 
+class Bullet:
+    def __init__(self, x, y):
+        self.image = pygame.Surface((12, 4))
+        self.image.fill((255, 0, 0))
+        self.rect = self.image.get_rect(center=(x, y))
+        self.speed = 10
+
+    def update(self):
+        self.rect.x += self.speed
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+    def off_screen(self, screen_width):
+        return self.rect.left > screen_width
+
+
 def run_level1():
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    # Load custom font
     font_path = "assets/fonts/Neuropol X Rg.otf"
     font = pygame.font.Font(font_path, 28)
 
-    # Music
     pygame.mixer.init()
     pygame.mixer.music.load("assets/sounds/level1.ogg")
     pygame.mixer.music.set_volume(0.5)
@@ -48,6 +63,8 @@ def run_level1():
 
     player = Player(x=screen.get_width() // 2, y=screen.get_height() - 50)
     background = ParallaxBackground(screen, "assets/backgrounds/parallax")
+    bullets = []
+
     start_time = time.time()
     running = True
 
@@ -58,6 +75,10 @@ def run_level1():
             if event.type == pygame.QUIT:
                 pygame.mixer.music.stop()
                 return
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    bullet = Bullet(player.rect.right, player.rect.centery)
+                    bullets.append(bullet)
 
         background.update()
         background.draw()
@@ -65,6 +86,12 @@ def run_level1():
         keys = pygame.key.get_pressed()
         player.move(keys, screen.get_width(), screen.get_height())
         player.draw(screen)
+
+        for bullet in bullets:
+            bullet.update()
+            bullet.draw(screen)
+
+        bullets = [b for b in bullets if not b.off_screen(screen.get_width())]
 
         elapsed = int(time.time() - start_time)
         timer = font.render(f"Time: {elapsed}s", True, (255, 255, 255))
