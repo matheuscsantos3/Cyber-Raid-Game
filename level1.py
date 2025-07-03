@@ -3,6 +3,7 @@ import time
 import random
 from parallax import ParallaxBackground
 from enemy import Enemy
+from explosion import Explosion
 
 class Player:
     def __init__(self, x, y):
@@ -66,6 +67,7 @@ def run_level1():
     background = ParallaxBackground(screen, "assets/backgrounds/parallax")
     bullets = []
     enemies = []
+    explosions = []
 
     spawn_timer = 0
     spawn_interval = 120
@@ -104,15 +106,40 @@ def run_level1():
             enemies.append(Enemy(screen.get_width() + 40, y))
 
         for enemy in enemies:
-            enemy.rect.x -= 2  # Move horizontally from right to left
+            enemy.rect.x -= 2
             enemy.draw(screen)
 
         enemies = [e for e in enemies if not e.off_screen(screen.get_width())]
 
+        for enemy in enemies[:]:
+            for bullet in bullets[:]:
+                if bullet.rect.colliderect(enemy.rect.inflate(-10, -10)):
+                    explosions.append(Explosion(enemy.rect.centerx, enemy.rect.centery))
+                    enemies.remove(enemy)
+                    bullets.remove(bullet)
+                    break
+
         for enemy in enemies:
-            if player.rect.colliderect(enemy.rect.inflate(-20, -20)):
+            if player.rect.colliderect(enemy.rect.inflate(-40, -40)):
+                explosions.append(Explosion(player.rect.centerx, player.rect.centery))
                 pygame.mixer.music.stop()
+                game_over = True
+                while game_over:
+                    clock.tick(60)
+                    screen.fill((0, 0, 0))
+                    for e in explosions:
+                        e.update()
+                        e.draw(screen)
+                        if e.done:
+                            game_over = False
+                    pygame.display.flip()
                 return
+
+        for e in explosions:
+            e.update()
+            e.draw(screen)
+
+        explosions = [e for e in explosions if not e.done]
 
         elapsed = int(time.time() - start_time)
         timer = font.render(f"Time: {elapsed}s", True, (255, 255, 255))
