@@ -1,6 +1,8 @@
 import pygame
 import time
+import random
 from parallax import ParallaxBackground
+from enemy import Enemy
 
 class Player:
     def __init__(self, x, y):
@@ -18,7 +20,6 @@ class Player:
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.rect.y += self.speed
 
-        # Keep player inside screen
         if self.rect.left < 0:
             self.rect.left = 0
         if self.rect.right > screen_width:
@@ -61,10 +62,13 @@ def run_level1():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
-    player = Player(x=screen.get_width() // 2, y=screen.get_height() - 50)
+    player = Player(x=100, y=screen.get_height() // 2)
     background = ParallaxBackground(screen, "assets/backgrounds/parallax")
     bullets = []
+    enemies = []
 
+    spawn_timer = 0
+    spawn_interval = 120
     start_time = time.time()
     running = True
 
@@ -92,6 +96,23 @@ def run_level1():
             bullet.draw(screen)
 
         bullets = [b for b in bullets if not b.off_screen(screen.get_width())]
+
+        spawn_timer += 1
+        if spawn_timer >= spawn_interval:
+            spawn_timer = 0
+            y = random.randint(0, screen.get_height())
+            enemies.append(Enemy(screen.get_width() + 40, y))
+
+        for enemy in enemies:
+            enemy.rect.x -= 2  # Move horizontally from right to left
+            enemy.draw(screen)
+
+        enemies = [e for e in enemies if not e.off_screen(screen.get_width())]
+
+        for enemy in enemies:
+            if player.rect.colliderect(enemy.rect.inflate(-20, -20)):
+                pygame.mixer.music.stop()
+                return
 
         elapsed = int(time.time() - start_time)
         timer = font.render(f"Time: {elapsed}s", True, (255, 255, 255))
