@@ -120,19 +120,34 @@ def run_level1():
                     break
 
         for enemy in enemies:
-            if player.rect.colliderect(enemy.rect.inflate(-40, -40)):
+            if player.rect.colliderect(enemy.rect.inflate(-20, -20)):
                 explosions.append(Explosion(player.rect.centerx, player.rect.centery))
                 pygame.mixer.music.stop()
+
+                game_over_sound = pygame.mixer.Sound("assets/sounds/game_over.ogg")
+                game_over_sound.set_volume(0.8)
+                game_over_sound.play()
+
+                game_over_font = pygame.font.Font("assets/fonts/cyberpunk.ttf", 72)
+                game_over_text = game_over_font.render("GAME OVER", True, (255, 0, 0))
+                game_over_rect = game_over_text.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+
                 game_over = True
                 while game_over:
                     clock.tick(60)
                     screen.fill((0, 0, 0))
+
                     for e in explosions:
                         e.update()
                         e.draw(screen)
-                        if e.done:
-                            game_over = False
+
+                    screen.blit(game_over_text, game_over_rect)
                     pygame.display.flip()
+
+                    if all(e.done for e in explosions):
+                        pygame.time.delay(3000)
+                        game_over = False
+
                 return
 
         for e in explosions:
