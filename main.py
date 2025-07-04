@@ -2,24 +2,19 @@ import pygame
 import sys
 from menu import Menu
 from level1 import run_level1
+from level2 import run_level2
 
-# Initialize Pygame
 pygame.init()
 
-# Constants
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 FPS = 60
 
-# Setup display
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Cyber Raid")
 clock = pygame.time.Clock()
 
-# Game state
 current_state = "menu"
-
-# Create menu
 menu = Menu(screen)
 
 def main():
@@ -33,14 +28,18 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-        # State control
         if current_state == "menu":
             current_state = menu.handle_input()
             menu.draw()
 
         elif current_state == "game":
-            run_level1()  # Start phase 1
-            current_state = "menu"  # Return to menu after phase ends
+            phase1_result = run_level1(screen)
+            if phase1_result == "next":
+                phase2_result = run_level2(screen)
+                if phase2_result == "menu":
+                    current_state = "menu"
+            else:
+                current_state = "menu"
 
         pygame.display.flip()
 
