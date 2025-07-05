@@ -193,4 +193,4 @@ def run_level2(screen):
 
         if elapsed >= 60:
             pygame.mixer.music.stop()
-            return "menu"
+            return "score", elapsed, score
