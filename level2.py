@@ -84,6 +84,12 @@ def run_level2(screen):
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
+    shoot_sound = pygame.mixer.Sound("assets/sounds/shoot.ogg")
+    shoot_sound.set_volume(0.1)
+
+    explosion_sound = pygame.mixer.Sound("assets/sounds/explosion.ogg")
+    explosion_sound.set_volume(0.3)
+
     player = Player(100, screen.get_height() // 2)
     background = ParallaxBackground(screen, "assets/backgrounds/level2")
     bullets = []
@@ -104,6 +110,7 @@ def run_level2(screen):
                 return "menu"
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 bullets.append(Bullet(player.rect.right, player.rect.centery))
+                shoot_sound.play()
 
         background.update()
         background.draw()
@@ -132,6 +139,7 @@ def run_level2(screen):
             for bullet in bullets[:]:
                 if bullet.rect.colliderect(enemy.rect.inflate(-10, -10)):
                     explosions.append(Explosion(enemy.rect.centerx, enemy.rect.centery))
+                    explosion_sound.play()
                     enemies.remove(enemy)
                     bullets.remove(bullet)
                     break
