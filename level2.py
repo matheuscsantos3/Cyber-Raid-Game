@@ -99,6 +99,7 @@ def run_level2(screen):
     spawn_timer = 0
     spawn_interval = 120
     start_time = time.time()
+    score = 0
 
     running = True
     while running:
@@ -142,6 +143,7 @@ def run_level2(screen):
                     explosion_sound.play()
                     enemies.remove(enemy)
                     bullets.remove(bullet)
+                    score += 1
                     break
 
         for enemy in enemies:
@@ -183,6 +185,9 @@ def run_level2(screen):
         elapsed = int(time.time() - start_time)
         timer = font.render(f"Time: {elapsed}s", True, (255, 255, 255))
         screen.blit(timer, (10, 10))
+
+        score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(score_text, (200, 10))
 
         pygame.display.flip()
 
