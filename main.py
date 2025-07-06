@@ -1,9 +1,9 @@
 import pygame
 import sys
-from menu import Menu
-from level1 import run_level1
-from level2 import run_level2
-from score_screen import ScoreScreen
+from codes.menu import Menu
+from codes.level1 import run_level1
+from codes.level2 import run_level2
+from codes.score_screen import ScoreScreen
 
 pygame.init()
 

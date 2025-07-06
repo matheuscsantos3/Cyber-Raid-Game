@@ -38,4 +38,3 @@ class ScoreScreen:
         if keys[pygame.K_RETURN]:
             return "menu"
         return "score"
-

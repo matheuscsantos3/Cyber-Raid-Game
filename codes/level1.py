@@ -1,35 +1,9 @@
 import pygame
 import time
 import random
-from parallax import ParallaxBackground
-from explosion import Explosion
-
-class Enemy2:
-    def __init__(self, x, y):
-        self.frames = [
-            pygame.image.load("assets/enemies/level2/enemy2_1.png").convert_alpha(),
-            pygame.image.load("assets/enemies/level2/enemy2_2.png").convert_alpha()
-        ]
-        self.current_frame = 0
-        self.animation_timer = 0
-        self.animation_speed = 10
-        self.image = self.frames[self.current_frame]
-        self.rect = self.image.get_rect(center=(x, y))
-        self.speed = 2
-
-    def update(self):
-        self.rect.x -= self.speed
-        self.animation_timer += 1
-        if self.animation_timer >= self.animation_speed:
-            self.current_frame = (self.current_frame + 1) % len(self.frames)
-            self.image = self.frames[self.current_frame]
-            self.animation_timer = 0
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
-
-    def off_screen(self, screen_width):
-        return self.rect.right < 0
+from codes.parallax import ParallaxBackground
+from codes.enemy import Enemy
+from codes.explosion import Explosion
 
 class Player:
     def __init__(self, x, y):
@@ -75,12 +49,12 @@ class Bullet:
     def off_screen(self, screen_width):
         return self.rect.left > screen_width
 
-def run_level2(screen):
+def run_level1(screen):
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Neuropol X Rg.otf", 28)
 
     pygame.mixer.init()
-    pygame.mixer.music.load("assets/sounds/level2.ogg")
+    pygame.mixer.music.load("assets/sounds/level1.ogg")
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
@@ -91,7 +65,7 @@ def run_level2(screen):
     explosion_sound.set_volume(0.3)
 
     player = Player(100, screen.get_height() // 2)
-    background = ParallaxBackground(screen, "assets/backgrounds/level2")
+    background = ParallaxBackground(screen, "assets/backgrounds/parallax")
     bullets = []
     enemies = []
     explosions = []
@@ -108,7 +82,7 @@ def run_level2(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.mixer.music.stop()
-                return "menu"
+                return
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 bullets.append(Bullet(player.rect.right, player.rect.centery))
                 shoot_sound.play()
@@ -129,9 +103,10 @@ def run_level2(screen):
         if spawn_timer >= spawn_interval:
             spawn_timer = 0
             y = random.randint(0, screen.get_height())
-            enemies.append(Enemy2(screen.get_width() + 40, y))
+            enemies.append(Enemy(screen.get_width() + 40, y))
 
         for enemy in enemies:
+            enemy.rect.x -= 2
             enemy.update()
             enemy.draw(screen)
         enemies = [e for e in enemies if not e.off_screen(screen.get_width())]
@@ -147,7 +122,7 @@ def run_level2(screen):
                     break
 
         for enemy in enemies:
-            if player.rect.colliderect(enemy.rect.inflate(-40, -40)):
+            if player.rect.colliderect(enemy.rect.inflate(-20, -20)):
                 explosions.append(Explosion(player.rect.centerx, player.rect.centery))
                 pygame.mixer.music.stop()
 
@@ -163,19 +138,15 @@ def run_level2(screen):
                 while game_over:
                     clock.tick(60)
                     screen.fill((0, 0, 0))
-
                     for e in explosions:
                         e.update()
                         e.draw(screen)
-
                     screen.blit(game_over_text, game_over_rect)
                     pygame.display.flip()
-
                     if all(e.done for e in explosions):
                         pygame.time.delay(3000)
                         game_over = False
-
-                return "menu"
+                return
 
         for e in explosions:
             e.update()
@@ -195,4 +166,4 @@ def run_level2(screen):
             pygame.mixer.music.stop()
             pygame.mixer.Sound("assets/sounds/level_up.ogg").play()
             pygame.time.delay(2000)
-            return "score", elapsed, score
+            return "next", elapsed, score
