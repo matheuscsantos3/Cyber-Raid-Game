@@ -1,4 +1,5 @@
 import pygame
+from codes.database import get_top_scores
 
 class ScoreScreen:
     def __init__(self, screen, final_time, final_score):
@@ -15,22 +16,32 @@ class ScoreScreen:
         pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(-1)
 
+        self.top_scores = get_top_scores()
+
     def draw(self):
         self.screen.blit(self.background, (0, 0))
         title_surface = self.title_font.render("SCORE", True, (255, 20, 147))
-        title_rect = title_surface.get_rect(center=(400, 140))
+        title_rect = title_surface.get_rect(center=(400, 100))
         self.screen.blit(title_surface, title_rect)
 
         time_surface = self.neuropol_font.render(f"Time: {self.final_time:.2f}s", True, (0, 255, 255))
-        time_rect = time_surface.get_rect(center=(400, 240))
+        time_rect = time_surface.get_rect(center=(400, 180))
         self.screen.blit(time_surface, time_rect)
 
         score_surface = self.neuropol_font.render(f"Score: {self.final_score}", True, (0, 255, 255))
-        score_rect = score_surface.get_rect(center=(400, 290))
+        score_rect = score_surface.get_rect(center=(400, 220))
         self.screen.blit(score_surface, score_rect)
 
+        ranking_title = self.text_font.render("Top 5 Rankings", True, (255, 255, 0))
+        ranking_rect = ranking_title.get_rect(center=(400, 280))
+        self.screen.blit(ranking_title, ranking_rect)
+
+        for i, (time, score) in enumerate(self.top_scores):
+            rank_text = self.neuropol_font.render(f"{i+1}. Score: {score} | Time: {time:.2f}s", True, (0, 255, 255))
+            self.screen.blit(rank_text, (220, 320 + i * 30))
+
         return_surface = self.text_font.render("Press ENTER to return to game", True, (0, 255, 255))
-        return_rect = return_surface.get_rect(center=(400, 380))
+        return_rect = return_surface.get_rect(center=(400, 500))
         self.screen.blit(return_surface, return_rect)
 
     def handle_input(self):

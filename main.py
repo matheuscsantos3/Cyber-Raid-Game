@@ -4,6 +4,7 @@ from codes.menu import Menu
 from codes.level1 import run_level1
 from codes.level2 import run_level2
 from codes.score_screen import ScoreScreen
+from codes.database import initialize_db  
 
 pygame.init()
 
@@ -21,6 +22,7 @@ score_screen = None
 
 def main():
     global current_state, score_screen
+    initialize_db()  
     running = True
 
     while running:

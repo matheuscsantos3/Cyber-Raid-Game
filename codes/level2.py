@@ -3,6 +3,7 @@ import time
 import random
 from codes.parallax import ParallaxBackground
 from codes.explosion import Explosion
+from codes.database import save_score  
 
 class Enemy2:
     def __init__(self, x, y):
@@ -75,7 +76,7 @@ class Bullet:
     def off_screen(self, screen_width):
         return self.rect.left > screen_width
 
-def run_level2(screen):
+def run_level2(screen, total_time_so_far=0, total_score_so_far=0):
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Neuropol X Rg.otf", 28)
 
@@ -195,4 +196,7 @@ def run_level2(screen):
             pygame.mixer.music.stop()
             pygame.mixer.Sound("assets/sounds/level_up.ogg").play()
             pygame.time.delay(2000)
+            final_time = total_time_so_far + elapsed
+            final_score = total_score_so_far + score
+            save_score(final_time, final_score)
             return "score", elapsed, score
