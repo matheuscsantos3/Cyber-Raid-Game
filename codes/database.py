@@ -27,7 +27,7 @@ def save_score(time, score):
 def get_top_scores(limit=5):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    cursor.execute('SELECT score, time FROM scores ORDER BY score DESC, time ASC LIMIT ?', (limit,))
+    cursor.execute('SELECT score, time FROM scores ORDER BY score DESC, time DESC LIMIT ?', (limit,))
     results = cursor.fetchall()
     conn.close()
     return results

@@ -36,7 +36,7 @@ class ScoreScreen:
         ranking_rect = ranking_title.get_rect(center=(400, 280))
         self.screen.blit(ranking_title, ranking_rect)
 
-        for i, (time, score) in enumerate(self.top_scores):
+        for i, (score, time) in enumerate(self.top_scores):
             rank_text = self.neuropol_font.render(f"{i+1}. Score: {score} | Time: {time:.2f}s", True, (0, 255, 255))
             self.screen.blit(rank_text, (220, 320 + i * 30))
 

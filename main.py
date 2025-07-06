@@ -42,7 +42,7 @@ def main():
                 phase1_time = phase1_result[1]
                 phase1_score = phase1_result[2]
 
-                phase2_result = run_level2(screen)
+                phase2_result = run_level2(screen, phase1_time, phase1_score)
                 if isinstance(phase2_result, tuple) and phase2_result[0] == "score":
                     total_time = phase1_time + phase2_result[1]
                     total_score = phase1_score + phase2_result[2]
