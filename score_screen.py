@@ -29,7 +29,7 @@ class ScoreScreen:
         score_rect = score_surface.get_rect(center=(400, 290))
         self.screen.blit(score_surface, score_rect)
 
-        return_surface = self.text_font.render("Press ENTER to return to menu", True, (0, 255, 255))
+        return_surface = self.text_font.render("Press ENTER to return to game", True, (0, 255, 255))
         return_rect = return_surface.get_rect(center=(400, 380))
         self.screen.blit(return_surface, return_rect)
 

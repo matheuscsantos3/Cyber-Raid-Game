@@ -107,6 +107,7 @@ def run_level1(screen):
 
         for enemy in enemies:
             enemy.rect.x -= 2
+            enemy.update()
             enemy.draw(screen)
         enemies = [e for e in enemies if not e.off_screen(screen.get_width())]
 
@@ -165,4 +166,4 @@ def run_level1(screen):
             pygame.mixer.music.stop()
             pygame.mixer.Sound("assets/sounds/level_up.ogg").play()
             pygame.time.delay(2000)
-            return "next"
+            return "next", elapsed, score

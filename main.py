@@ -36,10 +36,15 @@ def main():
 
         elif current_state == "game":
             phase1_result = run_level1(screen)
-            if phase1_result == "next":
+            if isinstance(phase1_result, tuple) and phase1_result[0] == "next":
+                phase1_time = phase1_result[1]
+                phase1_score = phase1_result[2]
+
                 phase2_result = run_level2(screen)
                 if isinstance(phase2_result, tuple) and phase2_result[0] == "score":
-                    score_screen = ScoreScreen(screen, phase2_result[1], phase2_result[2])
+                    total_time = phase1_time + phase2_result[1]
+                    total_score = phase1_score + phase2_result[2]
+                    score_screen = ScoreScreen(screen, total_time, total_score)
                     current_state = "score"
                 elif phase2_result == "menu":
                     current_state = "menu"

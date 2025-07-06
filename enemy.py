@@ -15,7 +15,6 @@ class Enemy:
         self.speed = 2
 
     def update(self):
-        self.rect.y += self.speed
         self.animation_timer += 1
         if self.animation_timer >= self.animation_speed:
             self.current_frame = (self.current_frame + 1) % len(self.frames)

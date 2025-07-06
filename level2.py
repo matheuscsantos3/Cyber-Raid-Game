@@ -18,7 +18,7 @@ class Enemy2:
         self.speed = 2
 
     def update(self):
-        self.rect.y += self.speed
+        self.rect.x -= self.speed
         self.animation_timer += 1
         if self.animation_timer >= self.animation_speed:
             self.current_frame = (self.current_frame + 1) % len(self.frames)
@@ -28,8 +28,8 @@ class Enemy2:
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def off_screen(self, screen_height):
-        return self.rect.top > screen_height
+    def off_screen(self, screen_width):
+        return self.rect.right < 0
 
 class Player:
     def __init__(self, x, y):
@@ -132,7 +132,7 @@ def run_level2(screen):
             enemies.append(Enemy2(screen.get_width() + 40, y))
 
         for enemy in enemies:
-            enemy.rect.x -= 2
+            enemy.update()
             enemy.draw(screen)
         enemies = [e for e in enemies if not e.off_screen(screen.get_width())]
 
@@ -196,4 +196,3 @@ def run_level2(screen):
             pygame.mixer.Sound("assets/sounds/level_up.ogg").play()
             pygame.time.delay(2000)
             return "score", elapsed, score
-
