@@ -193,4 +193,7 @@ def run_level2(screen):
 
         if elapsed >= 60:
             pygame.mixer.music.stop()
+            pygame.mixer.Sound("assets/sounds/level_up.ogg").play()
+            pygame.time.delay(2000)
             return "score", elapsed, score
+
