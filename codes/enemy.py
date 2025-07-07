@@ -1,10 +1,17 @@
 import pygame
+import os
+import sys
+
+if getattr(sys, 'frozen', False):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class Enemy:
     def __init__(self, x, y):
         self.frames = [
-            pygame.image.load("assets/enemies/enemy.png").convert_alpha(),
-            pygame.image.load("assets/enemies/enemyloop.png").convert_alpha()
+            pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "enemies", "enemy.png")).convert_alpha(),
+            pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "enemies", "enemyloop.png")).convert_alpha()
         ]
         self.current_frame = 0
         self.animation_timer = 0

@@ -1,18 +1,25 @@
 import pygame
+import os
+import sys
 from codes.database import get_top_scores
+
+if getattr(sys, 'frozen', False):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class ScoreScreen:
     def __init__(self, screen, final_time, final_score):
         self.screen = screen
         self.final_time = final_time
         self.final_score = final_score
-        self.title_font = pygame.font.Font("assets/fonts/cyberpunk.ttf", 72)
-        self.neuropol_font = pygame.font.Font("assets/fonts/Neuropol X Rg.otf", 28)
-        self.text_font = pygame.font.Font("assets/fonts/cyberpunk.ttf", 28)
-        self.background = pygame.image.load("assets/backgrounds/menu_background.jpg").convert()
+        self.title_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "cyberpunk.ttf"), 72)
+        self.neuropol_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "Neuropol X Rg.otf"), 28)
+        self.text_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "cyberpunk.ttf"), 28)
+        self.background = pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "backgrounds", "menu_background.jpg")).convert()
 
         pygame.mixer.init()
-        pygame.mixer.music.load("assets/sounds/menu_theme.ogg")
+        pygame.mixer.music.load(os.path.join(BASE_DIR, "..", "assets", "sounds", "menu_theme.ogg"))
         pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(-1)
 

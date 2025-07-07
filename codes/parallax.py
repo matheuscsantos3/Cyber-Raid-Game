@@ -1,16 +1,28 @@
 import pygame
 import os
+import sys
+
+if getattr(sys, 'frozen', False):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class ParallaxBackground:
-    def __init__(self, screen, folder_path="assets/backgrounds/parallax", speed=1):
+    def __init__(self, screen, folder_path=None, speed=1):
         self.screen = screen
         self.layers = []
         self.speeds = []
 
+        if folder_path is None:
+            folder_path = os.path.join(BASE_DIR, "..", "assets", "backgrounds", "parallax")
+        else:
+            folder_path = os.path.join(BASE_DIR, "..", folder_path)
+
         layer_files = sorted(os.listdir(folder_path))
         for i, filename in enumerate(layer_files):
             if filename.endswith(".png"):
-                image = pygame.image.load(os.path.join(folder_path, filename)).convert_alpha()
+                image_path = os.path.join(folder_path, filename)
+                image = pygame.image.load(image_path).convert_alpha()
                 image = pygame.transform.scale(image, screen.get_size())
                 self.layers.append([image, 0])
                 self.speeds.append(speed * (i + 1) * 0.1)

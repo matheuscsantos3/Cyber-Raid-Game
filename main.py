@@ -1,28 +1,30 @@
 import pygame
 import sys
+import os
 from codes.menu import Menu
 from codes.level1 import run_level1
 from codes.level2 import run_level2
 from codes.score_screen import ScoreScreen
 from codes.database import initialize_db  
 
-pygame.init()
+if getattr(sys, 'frozen', False):
+    os.chdir(sys._MEIPASS) if hasattr(sys, '_MEIPASS') else None
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 FPS = 60
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Cyber Raid")
-clock = pygame.time.Clock()
-
-current_state = "menu"
-menu = Menu(screen)
-score_screen = None
-
 def main():
-    global current_state, score_screen
-    initialize_db()  
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption("Cyber Raid")
+    clock = pygame.time.Clock()
+
+    current_state = "menu"
+    menu = Menu(screen)
+    score_screen = None
+
+    initialize_db()
     running = True
 
     while running:

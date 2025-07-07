@@ -1,9 +1,16 @@
 import pygame
+import os
+import sys
+
+if getattr(sys, 'frozen', False):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class Explosion:
     def __init__(self, x, y):
         self.frames = [
-            pygame.image.load(f"assets/effects/playerExplosion{i}.png").convert_alpha()
+            pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "effects", f"playerExplosion{i}.png")).convert_alpha()
             for i in range(1, 13)
         ]
         self.index = 0
