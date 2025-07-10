@@ -39,7 +39,7 @@ class ScoreScreen:
         score_rect = score_surface.get_rect(center=(400, 220))
         self.screen.blit(score_surface, score_rect)
 
-        ranking_title = self.text_font.render("Top 5 Rankings", True, (255, 255, 0))
+        ranking_title = self.neuropol_font.render("Top 5 Rankings", True, (255, 255, 0))
         ranking_rect = ranking_title.get_rect(center=(400, 280))
         self.screen.blit(ranking_title, ranking_rect)
 
