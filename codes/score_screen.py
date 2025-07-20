@@ -3,16 +3,24 @@ import os
 import sys
 from codes.database import get_top_scores
 
+<<<<<<< HEAD
 if getattr(sys, 'frozen', False):
     BASE_DIR = sys._MEIPASS
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+=======
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+>>>>>>> 958f78a (Code and executable updated)
 
 class ScoreScreen:
     def __init__(self, screen, final_time, final_score):
         self.screen = screen
         self.final_time = final_time
         self.final_score = final_score
+<<<<<<< HEAD
         self.title_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "cyberpunk.ttf"), 72)
         self.neuropol_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "Neuropol X Rg.otf"), 28)
         self.text_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "cyberpunk.ttf"), 28)
@@ -20,6 +28,15 @@ class ScoreScreen:
 
         pygame.mixer.init()
         pygame.mixer.music.load(os.path.join(BASE_DIR, "..", "assets", "sounds", "menu_theme.ogg"))
+=======
+        self.title_font = pygame.font.Font(resource_path("assets/fonts/Cyberpunk.ttf"), 72)
+        self.neuropol_font = pygame.font.Font(resource_path("assets/fonts/Neuropol X Rg.otf"), 28)
+        self.text_font = pygame.font.Font(resource_path("assets/fonts/Cyberpunk.ttf"), 28)
+        self.background = pygame.image.load(resource_path("assets/backgrounds/menu_background.jpg")).convert()
+
+        pygame.mixer.init()
+        pygame.mixer.music.load(resource_path("assets/sounds/menu_theme.ogg"))
+>>>>>>> 958f78a (Code and executable updated)
         pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(-1)
 

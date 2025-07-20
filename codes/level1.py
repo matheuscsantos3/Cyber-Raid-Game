@@ -7,6 +7,7 @@ from codes.parallax import ParallaxBackground
 from codes.enemy import Enemy
 from codes.explosion import Explosion
 
+<<<<<<< HEAD
 if getattr(sys, 'frozen', False):
     BASE_DIR = sys._MEIPASS
 else:
@@ -15,6 +16,16 @@ else:
 class Player:
     def __init__(self, x, y):
         self.image = pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "player", "player.png")).convert_alpha()
+=======
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
+class Player:
+    def __init__(self, x, y):
+        self.image = pygame.image.load(resource_path("assets/player/player.png")).convert_alpha()
+>>>>>>> 958f78a (Code and executable updated)
         self.rect = self.image.get_rect(midbottom=(x, y))
         self.speed = 5
 
@@ -58,6 +69,7 @@ class Bullet:
 
 def run_level1(screen):
     clock = pygame.time.Clock()
+<<<<<<< HEAD
     font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "Neuropol X Rg.otf"), 28)
 
     pygame.mixer.init()
@@ -69,6 +81,19 @@ def run_level1(screen):
     shoot_sound.set_volume(0.1)
 
     explosion_sound = pygame.mixer.Sound(os.path.join(BASE_DIR, "..", "assets", "sounds", "explosion.ogg"))
+=======
+    font = pygame.font.Font(resource_path("assets/fonts/Neuropol X Rg.otf"), 28)
+
+    pygame.mixer.init()
+    pygame.mixer.music.load(resource_path("assets/sounds/level1.ogg"))
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1)
+
+    shoot_sound = pygame.mixer.Sound(resource_path("assets/sounds/shoot.ogg"))
+    shoot_sound.set_volume(0.1)
+
+    explosion_sound = pygame.mixer.Sound(resource_path("assets/sounds/explosion.ogg"))
+>>>>>>> 958f78a (Code and executable updated)
     explosion_sound.set_volume(0.3)
 
     player = Player(100, screen.get_height() // 2)
@@ -133,11 +158,19 @@ def run_level1(screen):
                 explosions.append(Explosion(player.rect.centerx, player.rect.centery))
                 pygame.mixer.music.stop()
 
+<<<<<<< HEAD
                 game_over_sound = pygame.mixer.Sound(os.path.join(BASE_DIR, "..", "assets", "sounds", "game_over.ogg"))
                 game_over_sound.set_volume(0.8)
                 game_over_sound.play()
 
                 game_over_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "cyberpunk.ttf"), 72)
+=======
+                game_over_sound = pygame.mixer.Sound(resource_path("assets/sounds/game_over.ogg"))
+                game_over_sound.set_volume(0.8)
+                game_over_sound.play()
+
+                game_over_font = pygame.font.Font(resource_path("assets/fonts/cyberpunk.ttf"), 72)
+>>>>>>> 958f78a (Code and executable updated)
                 game_over_text = game_over_font.render("GAME OVER", True, (255, 0, 0))
                 game_over_rect = game_over_text.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
 
@@ -171,6 +204,10 @@ def run_level1(screen):
 
         if elapsed >= 60:
             pygame.mixer.music.stop()
+<<<<<<< HEAD
             pygame.mixer.Sound(os.path.join(BASE_DIR, "..", "assets", "sounds", "level_up.ogg")).play()
+=======
+            pygame.mixer.Sound(resource_path("assets/sounds/level_up.ogg")).play()
+>>>>>>> 958f78a (Code and executable updated)
             pygame.time.delay(2000)
             return "next", elapsed, score

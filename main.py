@@ -5,10 +5,19 @@ from codes.menu import Menu
 from codes.level1 import run_level1
 from codes.level2 import run_level2
 from codes.score_screen import ScoreScreen
+<<<<<<< HEAD
 from codes.database import initialize_db  
 
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS) if hasattr(sys, '_MEIPASS') else None
+=======
+from codes.database import initialize_db
+
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+>>>>>>> 958f78a (Code and executable updated)
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
