@@ -6,14 +6,10 @@ Player progress is tracked and ranked using SQLite3. 🕹️
 
 ---
 
-### Phase 1
-
+### Phase 1  
 ![Phase 1](assets/readme/phase1.jpg)
 
----
-
-### Phase 2
-
+### Phase 2  
 ![Phase 2](assets/readme/phase2.jpg)
 
 ---
