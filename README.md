@@ -4,13 +4,13 @@ Cyber Raid is a 2D arcade-style shooter game developed with Pygame.
 Survive waves of enemies through cyberpunk-themed levels and try to get the highest score.  
 Player progress is tracked and ranked using SQLite3. 🕹️
 
----
+<p align="center">
+  <img src="assets/readme/phase1.jpg" width="600"/>
+</p>
 
-### Phase 1  
-![Phase 1](assets/readme/phase1.jpg)
-
-### Phase 2  
-![Phase 2](assets/readme/phase2.jpg)
+<p align="center">
+  <img src="assets/readme/phase2.jpg" width="600"/>
+</p>
 
 ---
 
