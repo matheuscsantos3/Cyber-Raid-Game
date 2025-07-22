@@ -2,17 +2,10 @@ import pygame
 import os
 import sys
 
-<<<<<<< HEAD
-if getattr(sys, 'frozen', False):
-    BASE_DIR = sys._MEIPASS
-else:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-=======
 def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
->>>>>>> 958f78a (Code and executable updated)
 
 class ParallaxBackground:
     def __init__(self, screen, folder_path=None, speed=1):
@@ -21,15 +14,9 @@ class ParallaxBackground:
         self.speeds = []
 
         if folder_path is None:
-<<<<<<< HEAD
-            folder_path = os.path.join(BASE_DIR, "..", "assets", "backgrounds", "parallax")
-        else:
-            folder_path = os.path.join(BASE_DIR, "..", folder_path)
-=======
             folder_path = resource_path("assets/backgrounds/parallax")
         else:
             folder_path = resource_path(folder_path)
->>>>>>> 958f78a (Code and executable updated)
 
         layer_files = sorted(os.listdir(folder_path))
         for i, filename in enumerate(layer_files):

@@ -2,33 +2,20 @@ import pygame
 import os
 import sys
 
-<<<<<<< HEAD
-if getattr(sys, 'frozen', False):
-    BASE_DIR = sys._MEIPASS
-else:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-=======
 def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
->>>>>>> 958f78a (Code and executable updated)
 
 class Enemy:
     def __init__(self, x, y):
         self.frames = [
-<<<<<<< HEAD
-            pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "enemies", "enemy.png")).convert_alpha(),
-            pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "enemies", "enemyloop.png")).convert_alpha()
-=======
             pygame.image.load(resource_path("assets/enemies/enemy.png")).convert_alpha(),
             pygame.image.load(resource_path("assets/enemies/enemyloop.png")).convert_alpha()
->>>>>>> 958f78a (Code and executable updated)
         ]
         self.current_frame = 0
         self.animation_timer = 0
         self.animation_speed = 10
-
         self.image = self.frames[self.current_frame]
         self.rect = self.image.get_rect(center=(x, y))
         self.speed = 2
@@ -43,5 +30,5 @@ class Enemy:
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def off_screen(self, screen_height):
-        return self.rect.top > screen_height
+    def off_screen(self, screen_width):
+        return self.rect.right < 0

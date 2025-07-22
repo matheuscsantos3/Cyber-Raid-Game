@@ -2,36 +2,20 @@ import pygame
 import os
 import sys
 
-<<<<<<< HEAD
-if getattr(sys, 'frozen', False):
-    BASE_DIR = sys._MEIPASS
-else:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-=======
 def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
->>>>>>> 958f78a (Code and executable updated)
 
 class Menu:
     def __init__(self, screen):
         self.screen = screen
-<<<<<<< HEAD
-        self.title_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "cyberpunk.ttf"), 72)
-        self.option_font = pygame.font.Font(os.path.join(BASE_DIR, "..", "assets", "fonts", "cyberpunk.ttf"), 28)
-        self.background = pygame.image.load(os.path.join(BASE_DIR, "..", "assets", "backgrounds", "menu_background.jpg")).convert()
-
-        pygame.mixer.init()
-        pygame.mixer.music.load(os.path.join(BASE_DIR, "..", "assets", "sounds", "menu_theme.ogg"))
-=======
         self.title_font = pygame.font.Font(resource_path("assets/fonts/cyberpunk.ttf"), 72)
         self.option_font = pygame.font.Font(resource_path("assets/fonts/cyberpunk.ttf"), 28)
         self.background = pygame.image.load(resource_path("assets/backgrounds/menu_background.jpg")).convert()
 
         pygame.mixer.init()
         pygame.mixer.music.load(resource_path("assets/sounds/menu_theme.ogg"))
->>>>>>> 958f78a (Code and executable updated)
         pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(-1)
 
